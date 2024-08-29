@@ -1,6 +1,7 @@
 import {userModel} from "../../../databases/models/user.model.js";
 import bcrypt, { hash } from 'bcrypt'
 import  jwt  from "jsonwebtoken";
+
 export const signUp=async(req,res)=>{
     const {name,email,password,age}=req.body
     const user=await userModel.findOne({email})

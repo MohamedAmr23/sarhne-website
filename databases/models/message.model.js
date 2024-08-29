@@ -3,13 +3,12 @@ import mongoose from "mongoose";
 const messageSchema= mongoose.Schema({
     message:{
         type:String,
-        require:true
+        required:true
     },
     receivdId:{
-        type:mongoose.SchemaType.ObjectId,
-        require:true,
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true,
     },
    
 })
-
-export default messageModel= mongoose.model('message',messageSchema)
+export const messageModel= mongoose.model('message',messageSchema)
