@@ -1,6 +1,7 @@
 import {userModel} from "../../../databases/models/user.model.js";
 import bcrypt, { hash } from 'bcrypt'
 import  jwt  from "jsonwebtoken";
+import { sendEmail } from "../../email/user.email.js";
 
 export const signUp=async(req,res)=>{
     const {name,email,password,age}=req.body
@@ -9,12 +10,20 @@ export const signUp=async(req,res)=>{
      
         bcrypt.hash(password, 8,async function(err, hash) {
             await userModel.insertMany({name,email,password:hash,age})
+            sendEmail({email})
             res.json({msg:"success"})
         });
     
   }
+
+  export const verify=async()=>{
+    const {email}=req.params
+    await userModel.findByIdAndUpdate({email},{confirmedEmail:true})
+    res.json({msg:"success"})
+  }
   
 export const signIn=async(req,res)=>{
+   
     const {email,password}=req.body
     const user=await userModel.findOne({email})
 
